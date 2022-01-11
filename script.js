@@ -5,22 +5,38 @@ const app = new Vue({
     el: '#app',
 
     data:{
-        genre: 'All',
-        musics: [],
+        genreSelected: 'All',
+        discs: [],
+
     },
 
-    method:{
-    //     getApi(){
-    //         axios.get('http://localhost/php-ajax-dischi/json.php')
-    //         .then( r => {
-    //             console.log('r',r);
-    //             this.musics= r;
+    methods:{
+        getApi(){
+            axios.get('http://localhost/php-ajax-dischi/json.php', {
+                params:{
+                    genre: this.genreSelected
+                }
+            })
+            .then( r => {
+                this.discs = r.data;
+                console.log('this.musics', this.discs);
                 
-    //         })
-    //         .catch( e => {
-    //             console.log(e);
-    //         });
-    // }
+               
+            })
+            .catch( e => {
+                console.log(e);
+            });
+                
+            console.log('DENTRO GETAPI');
+                
+                
+        }
 
-}
+    },
+    mounted(){
+        this.getApi();
+        console.log('ffff');
+    }
+
+
 });
